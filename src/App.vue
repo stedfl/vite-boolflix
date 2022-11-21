@@ -50,7 +50,6 @@ export default {
 <template>
   <AppHeader @search="getList"/>
   <AppMain />
-  
 </template>
 
 

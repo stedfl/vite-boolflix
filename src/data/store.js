@@ -11,7 +11,7 @@ export const store = reactive({
       categoryApi: 'movie'
     },
     {
-      title: 'Serie Tv',
+      title: 'TV Series',
       categoryApi: 'tv'
     }
   ],

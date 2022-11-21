@@ -14,26 +14,32 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <h1>{{title}}</h1>
-    <div class="search-bar">
-      <input v-model="store.movieSerieSearch" type="text" placeholder="Choose a movie or tv series">
-      <select v-model='store.categorySearch' name="categories">
-        <option selected value="">All</option>
-        <option 
-        v-for="(category, index) in store.categories" :key="index" :value="category.categoryApi">
+  <header>
+    <div class="container">
+      <h1>{{title}}</h1>
+      <div class="search-bar">
+        <input v-model="store.movieSerieSearch" type="text" placeholder="Choose a movie or tv series">
+        <select v-model='store.categorySearch' name="categories">
+          <option selected value="">All</option>
+          <option 
+          v-for="(category, index) in store.categories" :key="index" :value="category.categoryApi">
           {{category.title}}
-        </option>
-      </select>
-      <button @click="$emit('search')">Cerca</button>
-  </div>
-  </div>
+          </option>
+        </select>
+        <button @click="$emit('search')">Cerca</button>
+     </div>
+    </div>
+</header>
 
 </template>
 
 
 <style lang="scss" scoped>
 @use '../styles/partials/mixin' as *;
+
+header {
+  background-color: black;
+}
 
 .container {
   padding: 1rem 3rem;

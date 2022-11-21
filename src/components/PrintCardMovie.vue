@@ -11,7 +11,8 @@ export default {
       store,
       langFlag,
       isFlag: false,
-      outputRating: null
+      outputRating: null,
+      isMoreInfo: false
     }
   },
   methods: {
@@ -22,6 +23,7 @@ export default {
         this.isFlag = false;
       }
     },
+
   },
   computed: {
     getFlag() {
@@ -50,16 +52,14 @@ export default {
     getImage() {
       return `https://image.tmdb.org/t/p/w342${this.movie.poster_path}`
     },
-    getRating() {
+
+    getFullStars() {
+      let outputStars = '';
       if (this.movie.vote_average > 0) {
         this.outputRating = Math.ceil(this.movie.vote_average / 2);
       } else {
         this.outputRating = 1;
       }
-      return this.outputRating;
-    },
-    getFullStars() {
-      let outputStars = '';
       for (let i = 0; i < this.outputRating; i++) {
         outputStars += `<i class="fa-solid fa-star icon star-full"></i>`;
       }
@@ -81,32 +81,56 @@ export default {
 </script>
 
 <template>
-  <div class="card">
-    <li>
-      <h3>{{getTitle}}</h3>
-      <h3 v-if="getOriginalTitle!=getTitle">{{getOriginalTitle}}</h3>
-      <img :src="getImage" :alt="getTitle">
+  <div class="card" @mouseenter="isMoreInfo=true" @mouseleave="isMoreInfo=false">
+    <img v-if="!isMoreInfo" :src="getImage" :alt="getTitle">
+    <div v-else class="movie-info">
+      <h3>Title: {{getTitle}}</h3>
+      <h4 v-if="getOriginalTitle!=getTitle">Original Title: {{getOriginalTitle}}</h4>
       <div class="flag">
-        <h3 v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></h3>
-        <h3 v-else>{{movie.original_language}}</h3>
+        <p v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></p>
+        <h5 v-else>Language: {{movie.original_language}}</h5>
       </div>
-      <h3>{{getRating}}</h3>
       <div class="stars-rating">
+        <span>Rating: </span>
         <span class="full-stars" v-html="getFullStars"></span>
         <span class="empty-stars" v-html="getEmptyStars"></span>
       </div>
-    </li>
+      <p class="overview">{{movie.overview}}</p>
+    </div>
   </div>
 </template>
 
 
 
 <style lang="scss" scoped>
+@use '../styles/partials/variables' as *;
+.card {
+  width: calc(100% / 4 - 2rem);
+  height: 460px;
+  background-color:$primary-color;
+  margin-bottom: 2rem;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.movie-info {
+  padding: 1rem;
+  border: 1px solid white;
+  width: 100%;
+  height: 100%;
+}
 .full-stars {
   color:#ffbd00;
 }
 .empty-stars {
   color: gray;
+}
+
+.overview {
+  height: 300px;
+  overflow: auto;
 }
 
 </style>
