@@ -20,7 +20,6 @@ export default {
     <ul>
       <h3>{{store.categorySearch}}</h3>
       <PrintCardMovie v-for="movie in store.movieDataList" :key="movie.id" :movie="movie"/>
-
       <PrintCardMovie v-for="tvSeries in store.tvDataList" :key="tvSeries.id" :movie="tvSeries"/>
     </ul>
   </main>

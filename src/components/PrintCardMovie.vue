@@ -11,6 +11,7 @@ export default {
       store,
       langFlag,
       isFlag: false,
+      outputRating: null
     }
   },
   methods: {
@@ -45,6 +46,31 @@ export default {
       } else {
         return this.movie.original_name
       }
+    },
+    getImage() {
+      return `https://image.tmdb.org/t/p/w342${this.movie.poster_path}`
+    },
+    getRating() {
+      if (this.movie.vote_average > 0) {
+        this.outputRating = Math.ceil(this.movie.vote_average / 2);
+      } else {
+        this.outputRating = 1;
+      }
+      return this.outputRating;
+    },
+    getFullStars() {
+      let outputStars = '';
+      for (let i = 0; i < this.outputRating; i++) {
+        outputStars += `<i class="fa-solid fa-star icon star-full"></i>`;
+      }
+      return outputStars;
+    },
+    getEmptyStars() {
+      let outputStars = '';
+      for (let i = this.outputRating; i < 5; i++) {
+        outputStars += `<i class="fa-solid fa-star"></i>`;
+      }
+      return outputStars;
     }
   },
   mounted() {
@@ -59,11 +85,16 @@ export default {
     <li>
       <h3>{{getTitle}}</h3>
       <h3 v-if="getOriginalTitle!=getTitle">{{getOriginalTitle}}</h3>
+      <img :src="getImage" :alt="getTitle">
       <div class="flag">
         <h3 v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></h3>
         <h3 v-else>{{movie.original_language}}</h3>
       </div>
-      <h3>{{movie.vote_average}}</h3>
+      <h3>{{getRating}}</h3>
+      <div class="stars-rating">
+        <span class="full-stars" v-html="getFullStars"></span>
+        <span class="empty-stars" v-html="getEmptyStars"></span>
+      </div>
     </li>
   </div>
 </template>
@@ -71,10 +102,11 @@ export default {
 
 
 <style lang="scss" scoped>
-ul {
-  color: white;
+.full-stars {
+  color:#ffbd00;
 }
-
-
+.empty-stars {
+  color: gray;
+}
 
 </style>
