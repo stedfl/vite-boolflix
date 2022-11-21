@@ -9,12 +9,33 @@ export default {
   components: {
     AppHeader,
     AppMain
+  },
+  data() {
+    return {
+      store
+    }
+  },
+  methods: {
+    getApi() {
+      console.log(store.categorySearch);
+      console.log(store.movieDataList);
+      axios.get(store.apiUrl + store.categorySearch, {
+        params: {
+          api_key: store.key,
+          query: store.movieSerieSearch,
+        }
+      })
+      .then((results) => {
+        store.movieDataList = results.data.results;
+      })
+      
+    }
   }
 
 }
 </script>
 <template>
-  <AppHeader/>
+  <AppHeader @search="getApi"/>
   <AppMain />
   
 </template>
