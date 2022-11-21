@@ -3,10 +3,11 @@ export const store = reactive({
   apiUrl: 'https://api.themoviedb.org/3/search/',
   key: 'fe838e4a027ed777ef7c6ef5c1f324cc',
   movieDataList: [],
+  tvDataList: [],
   movieSerieSearch: '',
   categories: [
     {
-      title: 'Film',
+      title: 'Movie',
       categoryApi: 'movie'
     },
     {

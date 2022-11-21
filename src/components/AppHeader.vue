@@ -17,14 +17,15 @@ export default {
   <div class="container">
     <h1>{{title}}</h1>
     <div class="search-bar">
-    <input @keyup.enter="$emit('search')" v-model="store.movieSerieSearch" type="text">
-    <select v-model='store.categorySearch' name="categories">
-      <option selected value="movie">Select Category</option>
-      <option 
-      v-for="(category, index) in store.categories" :key="index" :value="category.categoryApi">
-        {{category.title}}
-      </option>
-    </select>
+      <input v-model="store.movieSerieSearch" type="text" placeholder="Choose a movie or tv series">
+      <select v-model='store.categorySearch' name="categories">
+        <option selected value="">All</option>
+        <option 
+        v-for="(category, index) in store.categories" :key="index" :value="category.categoryApi">
+          {{category.title}}
+        </option>
+      </select>
+      <button @click="$emit('search')">Cerca</button>
   </div>
   </div>
 

@@ -1,2 +1,4 @@
 const title = 'boolflix';
-export {title};
+const langFlag = ['en','it', 'es', 'fr', 'hr', 'de'];
+export {title, langFlag};
+

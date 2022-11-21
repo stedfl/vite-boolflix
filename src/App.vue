@@ -16,26 +16,39 @@ export default {
     }
   },
   methods: {
-    getApi() {
-      console.log(store.categorySearch);
-      console.log(store.movieDataList);
-      axios.get(store.apiUrl + store.categorySearch, {
+    getApi(category) {
+      axios.get(store.apiUrl + category, {
         params: {
           api_key: store.key,
           query: store.movieSerieSearch,
         }
       })
       .then((results) => {
-        store.movieDataList = results.data.results;
+        if(category === 'movie') {
+          store.movieDataList = results.data.results;
+        } else {
+          store.tvDataList = results.data.results;
+        }
       })
-      
+    },
+    getList() {
+      if(store.categorySearch === '') {
+        this.getApi('movie');
+        this.getApi('tv');
+      } else {
+        this.getApi(store.categorySearch);
+        if (store.categorySearch === 'movie') {
+          store.tvDataList = [];
+        } else {
+        store.movieDataList = [];
+        }
+      }
     }
   }
-
 }
 </script>
 <template>
-  <AppHeader @search="getApi"/>
+  <AppHeader @search="getList"/>
   <AppMain />
   
 </template>

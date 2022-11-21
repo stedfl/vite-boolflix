@@ -1,7 +1,11 @@
 <script>
+import PrintCardMovie from './PrintCardMovie.vue'
 import {store} from '../data/store';
 export default {
   name: 'AppMain',
+  components: {
+    PrintCardMovie
+  },
   data() {
     return {
       store
@@ -14,12 +18,10 @@ export default {
 <template>
   <main>
     <ul>
-      <li v-for="movie in store.movieDataList" :key="movie.id">
-        <h3>{{movie.title}}</h3>
-        <h3>{{movie.original_title}}</h3>
-        <h3>{{movie.original_language}}</h3>
-        <h3>{{movie.vote_average}}</h3>
-      </li>
+      <h3>{{store.categorySearch}}</h3>
+      <PrintCardMovie v-for="movie in store.movieDataList" :key="movie.id" :movie="movie"/>
+
+      <PrintCardMovie v-for="tvSeries in store.tvDataList" :key="tvSeries.id" :movie="tvSeries"/>
     </ul>
   </main>
  
