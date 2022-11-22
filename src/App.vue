@@ -39,6 +39,7 @@ export default {
     },
 
     getCastList(category) {
+      store.categories[category].castList = [];
       for (let id of store.categories[category].idsList) {
         axios.get(`${store.apiUrl}${category}/${id}/credits`, {
           params: {
@@ -53,6 +54,7 @@ export default {
     },
 
     getGenreList(category) {
+      store.categories[category].genreList = [];
       for (let id of store.categories[category].idsList) {
         axios.get(`${store.apiUrl}${category}/${id}`, {
           params: {
@@ -64,10 +66,7 @@ export default {
           store.categories[category].genreList.push(results.data.genres);
         })
       }
-      console.log(store.categories[category].genreList);
-
     },
-
     getList() {
       if(store.movieSerieSearch.length) {
         if(store.categorySearch === '') {
@@ -103,7 +102,6 @@ export default {
     getPopularList() {
       for (let category in store.categories) {
         this.getApiTrending(category);
-        store.categorySearch = category;
       } 
     }
   },

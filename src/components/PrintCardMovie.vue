@@ -112,13 +112,13 @@ export default {
           <h3>Voto:</h3>
           <div class="stars" v-html="getStars"></div>
         </div>
-        <div v-if="castList.length" class="cast">
+        <div class="cast">
           <ul>
             <h4>Cast: </h4>
             <li v-for="(actor, index) in castList" :key="index">{{actor.name}}</li>
           </ul>
         </div>
-        <div v-if="genreList.length" class="genre">
+        <div class="genre">
           <span>Genere: </span>
           <span v-for="genre in genreList" :key="genre.id">{{genre.name}}</span>
         </div>

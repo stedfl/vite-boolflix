@@ -22,7 +22,7 @@ export default {
           <input v-model.trim="store.movieSerieSearch" type="text" placeholder="Cerca un film o una serie TV">
         </div>
         <select v-model='store.categorySearch' name="categories">
-          <option selected value="">Tutti</option>
+          <option value="">Tutti</option>
           <option 
           v-for="(category, index) in store.categories" :key="index" :value="index">
           {{category.title}}
