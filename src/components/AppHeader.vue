@@ -9,7 +9,6 @@ export default {
       title
     }
   }
-
 }
 </script>
 
@@ -22,15 +21,14 @@ export default {
         <select v-model='store.categorySearch' name="categories">
           <option selected value="">All</option>
           <option 
-          v-for="(category, index) in store.categories" :key="index" :value="category.categoryApi">
+          v-for="(category, index) in store.categories" :key="index" :value="index">
           {{category.title}}
           </option>
         </select>
         <button @click="$emit('search')">Cerca</button>
      </div>
     </div>
-</header>
-
+  </header>
 </template>
 
 
@@ -48,6 +46,12 @@ header {
 h1 {
   color: red;
   text-transform: uppercase;
+}
+
+button {
+  background-color: red;
+  color: white;
+  border: 1px solid black;
 }
 
 </style>

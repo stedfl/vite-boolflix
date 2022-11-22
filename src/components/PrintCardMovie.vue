@@ -11,7 +11,6 @@ export default {
       store,
       langFlag,
       isFlag: false,
-      outputRating: null,
       isMoreInfo: false
     }
   },
@@ -23,6 +22,7 @@ export default {
         this.isFlag = false;
       }
     },
+
 
   },
   computed: {
@@ -52,23 +52,20 @@ export default {
     getImage() {
       return `https://image.tmdb.org/t/p/w342${this.movie.poster_path}`
     },
-
-    getFullStars() {
+    getStars() {
       let outputStars = '';
+      let outputRating = null;
       if (this.movie.vote_average > 0) {
-        this.outputRating = Math.ceil(this.movie.vote_average / 2);
+        outputRating = Math.ceil(this.movie.vote_average / 2);
       } else {
-        this.outputRating = 1;
+        outputRating = 1;
       }
-      for (let i = 0; i < this.outputRating; i++) {
-        outputStars += `<i class="fa-solid fa-star icon star-full"></i>`;
+      let i;
+      for (i = 0; i < outputRating; i++) {
+        outputStars += `<i class="fa-solid fa-star icon full-star"></i>`;
       }
-      return outputStars;
-    },
-    getEmptyStars() {
-      let outputStars = '';
-      for (let i = this.outputRating; i < 5; i++) {
-        outputStars += `<i class="fa-solid fa-star"></i>`;
+      for (; i < 5; i++) {
+        outputStars += `<i class="fa-solid fa-star icon empty-star"></i>`;
       }
       return outputStars;
     }
@@ -83,17 +80,16 @@ export default {
 <template>
   <div class="card" @mouseenter="isMoreInfo=true" @mouseleave="isMoreInfo=false">
     <img v-if="!isMoreInfo" :src="getImage" :alt="getTitle">
-    <div v-else class="movie-info">
+    <div  v-else class="movie-info">
       <h3>Title: {{getTitle}}</h3>
       <h4 v-if="getOriginalTitle!=getTitle">Original Title: {{getOriginalTitle}}</h4>
       <div class="flag">
         <p v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></p>
         <h5 v-else>Language: {{movie.original_language}}</h5>
       </div>
-      <div class="stars-rating">
-        <span>Rating: </span>
-        <span class="full-stars" v-html="getFullStars"></span>
-        <span class="empty-stars" v-html="getEmptyStars"></span>
+      <div class="rating">
+        <p>Rating: </p>
+        <div class="stars" v-html="getStars"></div>
       </div>
       <p class="overview">{{movie.overview}}</p>
     </div>
@@ -121,13 +117,18 @@ export default {
   width: 100%;
   height: 100%;
 }
-.full-stars {
-  color:#ffbd00;
-}
-.empty-stars {
-  color: gray;
+
+.rating {
+  display: flex;
 }
 
+.stars:deep(.icon.full-star) {
+  color: #ffbd00;
+}
+
+.stars:deep(.icon.empty-star)  {
+  color: lighten($primary-color, 40%);
+}
 .overview {
   height: 300px;
   overflow: auto;
