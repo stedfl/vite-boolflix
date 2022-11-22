@@ -26,10 +26,7 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
-        store.categories[category].idsList = [];
-        for (let item of store.categories[category].dataList) {
-        store.categories[category].idsList.push(item.id);
-        }
+        this.getId(category);
         this.getCastList(category);
         this.getGenreList(category);
       })
@@ -37,6 +34,7 @@ export default {
         store.categories[category].dataList = [];
       })
     },
+  
 
     getCastList(category) {
       store.categories[category].castList = [];
@@ -82,11 +80,10 @@ export default {
       }
     },
     getId(category) {
+      store.categories[category].idsList = [];
       for (let item of store.categories[category].dataList) {
-        store.categories[category].idsList.push(item);
+        store.categories[category].idsList.push(item.id);
       }
-      console.log(store.categories[category].dataList);
-      console.log( store.categories[category].idsList);
     },
     getApiTrending(category) {
       axios.get(`${store.apiUrl}trending/${category}/week`, {

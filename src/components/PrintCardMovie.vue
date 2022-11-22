@@ -13,7 +13,9 @@ export default {
       store,
       langFlag,
       isFlag: false,
-      isAvailable: false
+      isAvailable: false,
+      castMaxLength: 5,
+      rateRange: 5
     }
   },
   methods: {
@@ -24,6 +26,7 @@ export default {
         this.isFlag = false;
       }
     },
+
   },
   computed: {
     getFlag() {
@@ -61,33 +64,29 @@ export default {
       for (i = 0; i < outputRating; i++) {
         outputStars += `<i class="fa-solid fa-star icon full-star"></i>`;
       }
-      for (; i < 5; i++) {
+      for (; i < this.rateRange; i++) {
         outputStars += `<i class="fa-solid fa-star icon empty-star"></i>`;
       }
       return outputStars;
     },
     getCastList() {
       let outputCastList = '';
-      if (this.castList.length) {
-        if (this.castList < 6) {
-          for (let i=0; i < this.castList.length; i++) {
-            console.log(this.castList[i]);
-            outputCastList += `<li>${this.castList[i].name}</li>`
-          }
-        } else {
-          for (let i=0; i < 5; i++) {
-            console.log(this.castList[i]);
-            outputCastList += `<li>${this.castList[i].name}</li>`
-          }
+      if (this.castList && this.castList.length) {
+        for (let i = 0; i < this.castList.length && i < this.castMaxLength ; i++) {
+          outputCastList += `<li>${this.castList[i].name}</li>`
         }
       }
       return outputCastList;
     }
 
+
     
   },
   mounted() {
     this.showFlag();
+    console.log("cast" + this.castList);
+    console.log("type" + this.type);
+    console.log("genere" + this.genreList);
   }
 
 }
@@ -113,9 +112,9 @@ export default {
           <div class="stars" v-html="getStars"></div>
         </div>
         <div class="cast">
-          <ul>
-            <h4>Cast: </h4>
-            <li v-for="(actor, index) in castList" :key="index">{{actor.name}}</li>
+          <ul v-html="getCastList">
+         
+            
           </ul>
         </div>
         <div class="genre">
@@ -128,7 +127,7 @@ export default {
   </div>
   
 </template>
-
+<!-- <li v-for="(actor, index) in castList" :key="index">{{actor.name}}</li> -->
 
 
 <style lang="scss" scoped>

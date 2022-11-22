@@ -18,6 +18,7 @@ export default {
 <template>
   <main>
     <div class="container">
+      
       <div v-if="store.categories.movie.dataList.length" class="movies-list">
         <h2>Movies</h2>
         <div class="wrap movie">
@@ -26,6 +27,7 @@ export default {
             :key="index" 
             :type="movie"
             :castList="store.categories.movie.castList[index]"
+            :genreList="store.categories.movie.genreList[index]"
           />
         </div>
       </div>
@@ -39,10 +41,9 @@ export default {
             :castList="store.categories.tv.castList[index]"
             :genreList="store.categories.tv.genreList[index]"
           />
-    
         </div>
       </div>
-      <h2 v-else>Nessun risultato trovato</h2>
+      <h2 v-if="!store.categories.movie.dataList.length && !store.categories.tv.dataList.length">Nessun risultato trovato</h2>
     </div>
   </main>
 </template>
