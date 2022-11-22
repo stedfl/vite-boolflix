@@ -12,7 +12,8 @@ export default {
       store,
       langFlag,
       isFlag: false,
-      isMoreInfo: false
+      isMoreInfo: false,
+      isAvailable: false
     }
   },
   methods: {
@@ -55,7 +56,13 @@ export default {
       }
     },
     getImage() {
-      return `https://image.tmdb.org/t/p/w342${this.type.poster_path}`
+      if(this.type.poster_path === null) {
+        return 'https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg'
+      } else {
+        this.isAvailable = true;
+        return `https://image.tmdb.org/t/p/w342${this.type.poster_path}`
+      }
+      
     },
     getStars() {
       let outputStars = '';
@@ -84,8 +91,12 @@ export default {
 
 <template>
   <div class="card" @mouseenter="isMoreInfo=true" @mouseleave="isMoreInfo=false">
-    <img v-if="!isMoreInfo" :src="getImage" :alt="getTitle">
-    <div  v-else class="movie-info">
+    <div v-if="!isMoreInfo" class="front-card">
+      <h2 v-if="!isAvailable">{{this.type.name || this.type.original_title}}</h2>
+      <img :src="getImage" :alt="getTitle" :class="{'notavailable': !isAvailable}">
+    </div>
+       
+    <div v-else class="back-card">
       <h3>{{getTitle}}</h3>
       <h3>{{getOriginalTitle}}</h3>
       <div class="flag">
@@ -98,6 +109,7 @@ export default {
       </div>
       <p class="overview">{{type.overview}}</p>
     </div>
+
   </div>
 </template>
 
@@ -110,13 +122,28 @@ export default {
   height: 460px;
   background-color:$primary-color;
   margin-bottom: 2rem;
+}
+
+.front-card {
+  height: 100%;
+  text-align: center;
+  background-color: white;
   img {
     width: 100%;
     height: 100%;
   }
+  img.notavailable {
+  height: 80%;
+  width: 80%;
+  object-fit: cover;
+  } 
 }
 
-.movie-info {
+h2 {
+  color: $primary-color;
+}
+
+.back-card {
   padding: 1rem;
   border: 1px solid white;
   width: 100%;
