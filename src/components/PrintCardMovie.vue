@@ -84,9 +84,6 @@ export default {
   },
   mounted() {
     this.showFlag();
-    console.log("cast" + this.castList);
-    console.log("type" + this.type);
-    console.log("genere" + this.genreList);
   }
 
 }
@@ -127,7 +124,6 @@ export default {
   </div>
   
 </template>
-<!-- <li v-for="(actor, index) in castList" :key="index">{{actor.name}}</li> -->
 
 
 <style lang="scss" scoped>

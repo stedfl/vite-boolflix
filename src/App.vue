@@ -37,7 +37,7 @@ export default {
   
 
     getCastList(category) {
-      store.categories[category].castList = [];
+      store.categories[category].castList = {};
       for (let id of store.categories[category].idsList) {
         axios.get(`${store.apiUrl}${category}/${id}/credits`, {
           params: {
@@ -46,13 +46,13 @@ export default {
         }
         })
         .then((results) => {
-          store.categories[category].castList.push(results.data.cast);
+          store.categories[category].castList[id] = results.data.cast;
         })
       }
     },
 
     getGenreList(category) {
-      store.categories[category].genreList = [];
+      store.categories[category].genreList = {};
       for (let id of store.categories[category].idsList) {
         axios.get(`${store.apiUrl}${category}/${id}`, {
           params: {
@@ -61,7 +61,7 @@ export default {
         }
         })
         .then((results) => {
-          store.categories[category].genreList.push(results.data.genres);
+          store.categories[category].genreList[id] = results.data.cast;
         })
       }
     },

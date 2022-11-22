@@ -23,11 +23,11 @@ export default {
         <h2>Movies</h2>
         <div class="wrap movie">
           <PrintCardMovie 
-            v-for="(movie, index) in store.categories.movie.dataList" 
-            :key="index" 
+            v-for="movie in store.categories.movie.dataList" 
+            :key="movie.id" 
             :type="movie"
-            :castList="store.categories.movie.castList[index]"
-            :genreList="store.categories.movie.genreList[index]"
+            :castList="store.categories.movie.castList[movie.id]"
+            :genreList="store.categories.movie.genreList[movie.id]"
           />
         </div>
       </div>
@@ -35,11 +35,11 @@ export default {
         <h2>TV Series</h2>
         <div class="wrap tv">
           <PrintCardMovie  
-            v-for="(tvSerie, index) in store.categories.tv.dataList" 
-            :key="index" 
+            v-for="tvSerie in store.categories.tv.dataList" 
+            :key="tvSerie.id" 
             :type="tvSerie"
-            :castList="store.categories.tv.castList[index]"
-            :genreList="store.categories.tv.genreList[index]"
+            :castList="store.categories.tv.castList[tvSerie.id]"
+            :genreList="store.categories.tv.genreList[tvSerie.id]"
           />
         </div>
       </div>

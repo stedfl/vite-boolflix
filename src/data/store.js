@@ -8,15 +8,15 @@ export const store = reactive({
       title: 'Film',
       dataList: [],
       idsList: [],
-      castList: [],
-      genreList: []
+      castList: {},
+      genreList: {}
     },
     tv: {
       title: 'Serie TV',
       dataList: [],
       idsList: [],
-      castList: [],
-      genreList: []
+      castList: {},
+      genreList: {}
     }
   },
   categorySearch: ''
