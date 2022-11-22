@@ -5,7 +5,6 @@ export default {
   name: 'PrintCardMovie',
   props: {
     type: Object,
-    category: String
   },
   data() {
     return {
@@ -24,8 +23,6 @@ export default {
         this.isFlag = false;
       }
     },
-
-
   },
   computed: {
     getFlag() {
@@ -37,22 +34,9 @@ export default {
         }
       }
     },
-    getTitle() {
-      if (this.category === 'tv') {
-        return `Titolo: ${this.type.name}`
-      } else {
-        return `Titolo: ${this.type.title}`
-      }
-    },
-    getOriginalTitle() {
-      if((this.type.original_name === this.type.name) && (this.type.original_title === this.type.title)) {
-        return '';
-      } else {
-        if (this.category === 'tv') {
-          return `Titolo originale: ${this.type.original_name}`;
-        } else {
-          return `Titolo originale: ${this.type.original_title}`;
-        }
+    getIsOriginal() {
+      if ((this.type.original_name != this.type.name) || (this.type.original_title != this.type.title)) {
+        return true
       }
     },
     getImage() {
@@ -97,17 +81,17 @@ export default {
     </div>
        
     <div v-else class="back-card">
-      <h3>{{getTitle}}</h3>
-      <h3>{{getOriginalTitle}}</h3>
-      <div class="flag">
+      <h3 class="info">Titolo: <span>{{this.type.name || this.type.title}}</span></h3>
+      <h3 v-if="getIsOriginal" class="info">Titolo originale: <span>{{this.type.original_name || this.type.original_title}}</span></h3>
+      <div class="flag info">
         <p v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></p>
-        <h5 v-else>Lingua: {{type.original_language}}</h5>
+        <h3 v-else>Lingua: {{type.original_language}}</h3>
       </div>
-      <div class="rating">
-        <p>Voto: </p>
+      <div class="rating info">
+        <h3>Voto:</h3>
         <div class="stars" v-html="getStars"></div>
       </div>
-      <p class="overview">{{type.overview}}</p>
+      <p v-if="type.overview" class="overview info">"{{type.overview}}"</p>
     </div>
 
   </div>
@@ -117,6 +101,7 @@ export default {
 
 <style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
+
 .card {
   width: calc(100% / 4 - 2rem);
   height: 460px;
@@ -133,14 +118,14 @@ export default {
     height: 100%;
   }
   img.notavailable {
-  height: 80%;
-  width: 80%;
-  object-fit: cover;
-  } 
-}
-
-h2 {
-  color: $primary-color;
+    height: 80%;
+    width: 80%;
+    object-fit: cover;
+  }
+  h2 {
+    color: $primary-color;
+    padding: 1rem;
+  }
 }
 
 .back-card {
@@ -150,8 +135,24 @@ h2 {
   height: 100%;
 }
 
+.info {
+  margin-bottom: 0.5rem;
+}
+
+h2, h3, p {
+  font-size: 1rem;
+}
+
+span {
+  font-weight: 400;
+}
+
 .rating {
   display: flex;
+}
+
+.stars {
+  margin-left: 10px;
 }
 
 .stars:deep(.icon.full-star) {
@@ -161,9 +162,10 @@ h2 {
 .stars:deep(.icon.empty-star)  {
   color: lighten($primary-color, 40%);
 }
+
 .overview {
   height: 300px;
   overflow: auto;
+  font-style: italic;
 }
-
 </style>

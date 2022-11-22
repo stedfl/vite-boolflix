@@ -21,15 +21,16 @@ export default {
       <div v-if="store.categories.movie.dataList.length" class="movies-list">
         <h2>Movies</h2>
         <div class="wrap movie">
-          <PrintCardMovie v-for="movie in store.categories.movie.dataList" :key="movie.id" :type="movie" :category="'movie'"/>
+          <PrintCardMovie v-for="movie in store.categories.movie.dataList" :key="movie.id" :type="movie"/>
         </div>
       </div>
-      <div  v-if="store.categories.tv.dataList.length" class="tv-list">
+      <div v-if="store.categories.tv.dataList.length" class="tv-list">
         <h2>TV Series</h2>
         <div class="wrap tv">
-          <PrintCardMovie  v-for="tvSerie in store.categories.tv.dataList" :key="tvSerie.id" :type="tvSerie" :category="'tv'"/>
+          <PrintCardMovie  v-for="tvSerie in store.categories.tv.dataList" :key="tvSerie.id" :type="tvSerie"/>
         </div>
       </div>
+      <h2 v-else>Nessun risultato trovato</h2>
     </div>
   </main>
 </template>

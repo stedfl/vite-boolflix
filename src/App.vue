@@ -27,9 +27,13 @@ export default {
       .then((results) => {
         store.categories[category].dataList = results.data.results;
       })
+      .catch((error) => {
+        store.categories[category].dataList = [];
+      })
     },
     getList() {
-      if(store.categorySearch === '') {
+      if(store.movieSerieSearch.length) {
+        if(store.categorySearch === '') {
         for (let category in store.categories) {
           this.getApiSearch(category);
         }
@@ -38,6 +42,7 @@ export default {
           store.categories[category].dataList = [];
         }
         this.getApiSearch(store.categorySearch);
+      }
       }
     },
     getApiTrending(category) {
