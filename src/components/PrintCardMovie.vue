@@ -5,6 +5,7 @@ export default {
   name: 'PrintCardMovie',
   props: {
     type: Object,
+    castList: Array
   },
   data() {
     return {
@@ -63,7 +64,26 @@ export default {
         outputStars += `<i class="fa-solid fa-star icon empty-star"></i>`;
       }
       return outputStars;
+    },
+    getCastList() {
+      let outputCastList = '';
+      if (this.castList.length) {
+        if (this.castList < 6) {
+          for (let i=0; i < this.castList.length; i++) {
+            console.log(this.castList[i]);
+            outputCastList += `<li>${this.castList[i].name}</li>`
+          }
+        } else {
+          for (let i=0; i < 5; i++) {
+            console.log(this.castList[i]);
+            outputCastList += `<li>${this.castList[i].name}</li>`
+          }
+        }
+      }
+      return outputCastList;
     }
+
+    
   },
   mounted() {
     this.showFlag();
@@ -77,7 +97,7 @@ export default {
     <div class="inner-card">
       <div  class="front-card">
         <h2 v-if="!isAvailable">{{this.type.name || this.type.original_title}}</h2>
-        <img :src="getImage" :alt="getTitle" :class="{'notavailable': !isAvailable}">
+        <img :src="getImage" :alt="this.type.name || this.type.original_title" :class="{'notavailable': !isAvailable}">
       </div>
        
       <div class="back-card">
@@ -91,10 +111,17 @@ export default {
           <h3>Voto:</h3>
           <div class="stars" v-html="getStars"></div>
         </div>
+        <div class="cast">
+          <ul>
+            <li v-for="(actor, index) in castList" :key="index">{{actor.name}}</li>
+            
+          </ul>
+        </div>
         <p v-if="type.overview" class="overview info">"{{type.overview}}"</p>
       </div>
     </div>
   </div>
+  
 </template>
 
 
@@ -108,10 +135,11 @@ export default {
   background-color:$primary-color;
   margin-bottom: 2rem;
   perspective: 1000px;
-  background-image: url(../../public/logo-boolflix.png);
+  background-image: url(/logo-boolflix.png);
   background-size:80%;
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .inner-card {

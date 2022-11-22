@@ -7,10 +7,16 @@ export const store = reactive({
     movie: {
       title: 'Film',
       dataList: [],
+      idsList: [],
+      castList: [],
+      genreList: []
     },
     tv: {
       title: 'Serie TV',
       dataList: [],
+      idsList: [],
+      castList: [],
+      genreList: []
     }
   },
   categorySearch: ''

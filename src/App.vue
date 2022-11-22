@@ -26,11 +26,32 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
+        store.categories[category].idsList = [];
+        for (let item of store.categories[category].dataList) {
+        store.categories[category].idsList.push(item.id);
+        }
+        this.getCastList(category);
       })
       .catch((error) => {
         store.categories[category].dataList = [];
       })
     },
+
+    getCastList(category) {
+      for (let id of store.categories[category].idsList) {
+        axios.get(`${store.apiUrl}${category}/${id}/credits`, {
+          params: {
+          api_key: store.key,
+          language: 'it'
+        }
+        })
+        .then((results) => {
+          store.categories[category].castList.push(results.data.cast);
+        })
+      }
+      console.log(store.categories[category].castList);
+    },
+
     getList() {
       if(store.movieSerieSearch.length) {
         if(store.categorySearch === '') {
@@ -44,6 +65,13 @@ export default {
         this.getApiSearch(store.categorySearch);
       }
       }
+    },
+    getId(category) {
+      for (let item of store.categories[category].dataList) {
+        store.categories[category].idsList.push(item);
+      }
+      console.log(store.categories[category].dataList);
+      console.log( store.categories[category].idsList);
     },
     getApiTrending(category) {
       axios.get(`${store.apiUrl}trending/${category}/week`, {
