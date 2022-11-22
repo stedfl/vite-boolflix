@@ -37,6 +37,7 @@ export default {
             :key="index" 
             :type="tvSerie"
             :castList="store.categories.tv.castList[index]"
+            :genreList="store.categories.tv.genreList[index]"
           />
     
         </div>

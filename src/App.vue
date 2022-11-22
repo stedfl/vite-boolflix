@@ -31,6 +31,7 @@ export default {
         store.categories[category].idsList.push(item.id);
         }
         this.getCastList(category);
+        this.getGenreList(category);
       })
       .catch((error) => {
         store.categories[category].dataList = [];
@@ -49,7 +50,22 @@ export default {
           store.categories[category].castList.push(results.data.cast);
         })
       }
-      console.log(store.categories[category].castList);
+    },
+
+    getGenreList(category) {
+      for (let id of store.categories[category].idsList) {
+        axios.get(`${store.apiUrl}${category}/${id}`, {
+          params: {
+          api_key: store.key,
+          language: 'it'
+        }
+        })
+        .then((results) => {
+          store.categories[category].genreList.push(results.data.genres);
+        })
+      }
+      console.log(store.categories[category].genreList);
+
     },
 
     getList() {

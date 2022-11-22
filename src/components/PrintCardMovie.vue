@@ -5,7 +5,8 @@ export default {
   name: 'PrintCardMovie',
   props: {
     type: Object,
-    castList: Array
+    castList: Array,
+    genreList: Array
   },
   data() {
     return {
@@ -111,13 +112,17 @@ export default {
           <h3>Voto:</h3>
           <div class="stars" v-html="getStars"></div>
         </div>
-        <div class="cast">
+        <div v-if="castList.length" class="cast">
           <ul>
+            <h4>Cast: </h4>
             <li v-for="(actor, index) in castList" :key="index">{{actor.name}}</li>
-            
           </ul>
         </div>
-        <p v-if="type.overview" class="overview info">"{{type.overview}}"</p>
+        <div v-if="genreList.length" class="genre">
+          <span>Genere: </span>
+          <span v-for="genre in genreList" :key="genre.id">{{genre.name}}</span>
+        </div>
+        <p v-if="type.overview" class="overview info">{{type.overview}}</p>
       </div>
     </div>
   </div>
