@@ -4,7 +4,8 @@ import { store } from '../data/store';
 export default {
   name: 'PrintCardMovie',
   props: {
-    movie: Object,
+    type: Object,
+    category: String
   },
   data() {
     return {
@@ -16,7 +17,7 @@ export default {
   },
   methods: {
     showFlag() {
-      if (this.langFlag.includes(this.movie.original_language)) {
+      if (this.langFlag.includes(this.type.original_language)) {
         this.isFlag = true;
       } else {
         this.isFlag = false;
@@ -27,36 +28,40 @@ export default {
   },
   computed: {
     getFlag() {
-      if (this.langFlag.includes(this.movie.original_language)) {
-        if (this.movie.original_language === 'en') {
+      if (this.langFlag.includes(this.type.original_language)) {
+        if (this.type.original_language === 'en') {
           return 'gb'
         } else {
-          return this.movie.original_language
+          return this.type.original_language
         }
       }
     },
     getTitle() {
-      if (store.categorySearch === 'tv') {
-        return this.movie.name
+      if (this.category === 'tv') {
+        return `Titolo: ${this.type.name}`
       } else {
-        return this.movie.title
+        return `Titolo: ${this.type.title}`
       }
     },
     getOriginalTitle() {
-      if (store.categorySearch === 'movie') {
-        return this.movie.original_name
+      if((this.type.original_name === this.type.name) && (this.type.original_title === this.type.title)) {
+        return '';
       } else {
-        return this.movie.original_name
+        if (this.category === 'tv') {
+          return `Titolo originale: ${this.type.original_name}`;
+        } else {
+          return `Titolo originale: ${this.type.original_title}`;
+        }
       }
     },
     getImage() {
-      return `https://image.tmdb.org/t/p/w342${this.movie.poster_path}`
+      return `https://image.tmdb.org/t/p/w342${this.type.poster_path}`
     },
     getStars() {
       let outputStars = '';
       let outputRating = null;
-      if (this.movie.vote_average > 0) {
-        outputRating = Math.ceil(this.movie.vote_average / 2);
+      if (this.type.vote_average > 0) {
+        outputRating = Math.ceil(this.type.vote_average / 2);
       } else {
         outputRating = 1;
       }
@@ -81,17 +86,17 @@ export default {
   <div class="card" @mouseenter="isMoreInfo=true" @mouseleave="isMoreInfo=false">
     <img v-if="!isMoreInfo" :src="getImage" :alt="getTitle">
     <div  v-else class="movie-info">
-      <h3>Title: {{getTitle}}</h3>
-      <h4 v-if="getOriginalTitle!=getTitle">Original Title: {{getOriginalTitle}}</h4>
+      <h3>{{getTitle}}</h3>
+      <h3>{{getOriginalTitle}}</h3>
       <div class="flag">
         <p v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></p>
-        <h5 v-else>Language: {{movie.original_language}}</h5>
+        <h5 v-else>Lingua: {{type.original_language}}</h5>
       </div>
       <div class="rating">
-        <p>Rating: </p>
+        <p>Voto: </p>
         <div class="stars" v-html="getStars"></div>
       </div>
-      <p class="overview">{{movie.overview}}</p>
+      <p class="overview">{{type.overview}}</p>
     </div>
   </div>
 </template>

@@ -17,9 +17,9 @@ export default {
     <div class="container">
       <h1>{{title}}</h1>
       <div class="search-bar">
-        <input v-model="store.movieSerieSearch" type="text" placeholder="Choose a movie or tv series">
+        <input v-model.trim="store.movieSerieSearch" type="text" placeholder="Cerca un film o una serie TV">
         <select v-model='store.categorySearch' name="categories">
-          <option selected value="">All</option>
+          <option selected value="">Tutti</option>
           <option 
           v-for="(category, index) in store.categories" :key="index" :value="index">
           {{category.title}}

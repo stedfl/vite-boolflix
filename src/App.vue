@@ -21,6 +21,7 @@ export default {
         params: {
           api_key: store.key,
           query: store.movieSerieSearch,
+          language: 'it'
         }
       })
       .then((results) => {
@@ -33,7 +34,6 @@ export default {
           this.getApiSearch(category);
         }
       } else {
-        console.log(store.categorySearch);
         for (let category in store.categories) {
           store.categories[category].dataList = [];
         }
@@ -44,6 +44,7 @@ export default {
       axios.get(`${store.apiUrl}trending/${category}/week`, {
         params: {
           api_key: store.key,
+          language: 'it'
         }
       })
       .then((results) => {
@@ -53,6 +54,7 @@ export default {
     getPopularList() {
       for (let category in store.categories) {
         this.getApiTrending(category);
+        store.categorySearch = category;
       } 
     }
   },

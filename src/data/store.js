@@ -5,11 +5,11 @@ export const store = reactive({
   movieSerieSearch: '',
   categories: {
     movie: {
-      title: 'Movie',
+      title: 'Film',
       dataList: [],
     },
     tv: {
-      title: 'TV Series',
+      title: 'Serie TV',
       dataList: [],
     }
   },
