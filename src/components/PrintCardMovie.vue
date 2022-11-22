@@ -11,7 +11,6 @@ export default {
       store,
       langFlag,
       isFlag: false,
-      isMoreInfo: false,
       isAvailable: false
     }
   },
@@ -75,25 +74,26 @@ export default {
 
 <template>
   <div class="card" @mouseenter="isMoreInfo=true" @mouseleave="isMoreInfo=false">
-    <div v-if="!isMoreInfo" class="front-card">
-      <h2 v-if="!isAvailable">{{this.type.name || this.type.original_title}}</h2>
-      <img :src="getImage" :alt="getTitle" :class="{'notavailable': !isAvailable}">
-    </div>
+    <div class="inner-card">
+      <div  class="front-card">
+        <h2 v-if="!isAvailable">{{this.type.name || this.type.original_title}}</h2>
+        <img :src="getImage" :alt="getTitle" :class="{'notavailable': !isAvailable}">
+      </div>
        
-    <div v-else class="back-card">
-      <h3 class="info">Titolo: <span>{{this.type.name || this.type.title}}</span></h3>
-      <h3 v-if="getIsOriginal" class="info">Titolo originale: <span>{{this.type.original_name || this.type.original_title}}</span></h3>
-      <div class="flag info">
-        <p v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></p>
-        <h3 v-else>Lingua: {{type.original_language}}</h3>
+      <div class="back-card">
+        <h3 class="info">Titolo: <span>{{this.type.name || this.type.title}}</span></h3>
+        <h3 v-if="getIsOriginal" class="info">Titolo originale: <span>{{this.type.original_name || this.type.original_title}}</span></h3>
+        <div class="flag info">
+          <p v-if="isFlag"><span class="fi" :class="`fi-${getFlag}`"></span></p>
+          <h3 v-else>Lingua: {{type.original_language}}</h3>
+        </div>
+        <div class="rating info">
+          <h3>Voto:</h3>
+          <div class="stars" v-html="getStars"></div>
+        </div>
+        <p v-if="type.overview" class="overview info">"{{type.overview}}"</p>
       </div>
-      <div class="rating info">
-        <h3>Voto:</h3>
-        <div class="stars" v-html="getStars"></div>
-      </div>
-      <p v-if="type.overview" class="overview info">"{{type.overview}}"</p>
     </div>
-
   </div>
 </template>
 
@@ -107,6 +107,27 @@ export default {
   height: 460px;
   background-color:$primary-color;
   margin-bottom: 2rem;
+  perspective: 1000px;
+  background-image: url(../../public/logo-boolflix.png);
+  background-size:80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.inner-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.front-card, .back-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .front-card {
@@ -129,10 +150,20 @@ export default {
 }
 
 .back-card {
-  padding: 1rem;
-  border: 1px solid white;
   width: 100%;
   height: 100%;
+  transform: rotateY(180deg);
+  background-image: linear-gradient(
+    black 0%,
+    $primary-color 100%
+  );
+  padding: 1rem;
+  border: 1px solid red;
+  box-shadow: inset 0 0 40px 40px rgba(255, 1, 1, 0.1);
+}
+
+.card:hover .inner-card {
+  transform: rotateY(180deg);
 }
 
 .info {
