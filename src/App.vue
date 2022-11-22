@@ -26,7 +26,6 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
-        this.getId(category);
         this.getCastList(category);
         this.getGenreList(category);
       })
@@ -38,30 +37,30 @@ export default {
 
     getCastList(category) {
       store.categories[category].castList = {};
-      for (let id of store.categories[category].idsList) {
-        axios.get(`${store.apiUrl}${category}/${id}/credits`, {
+      for (let item of store.categories[category].dataList) {
+        axios.get(`${store.apiUrl}${category}/${item.id}/credits`, {
           params: {
           api_key: store.key,
           language: 'it'
         }
         })
         .then((results) => {
-          store.categories[category].castList[id] = results.data.cast;
+          store.categories[category].castList[item.id] = results.data.cast;
         })
       }
     },
 
     getGenreList(category) {
       store.categories[category].genreList = {};
-      for (let id of store.categories[category].idsList) {
-        axios.get(`${store.apiUrl}${category}/${id}`, {
+      for (let item of store.categories[category].dataList) {
+        axios.get(`${store.apiUrl}${category}/${item.id}`, {
           params: {
           api_key: store.key,
           language: 'it'
         }
         })
         .then((results) => {
-          store.categories[category].genreList[id] = results.data.cast;
+          store.categories[category].genreList[item.id] = results.data.genres;
         })
       }
     },
@@ -79,12 +78,6 @@ export default {
       }
       }
     },
-    getId(category) {
-      store.categories[category].idsList = [];
-      for (let item of store.categories[category].dataList) {
-        store.categories[category].idsList.push(item.id);
-      }
-    },
     getApiTrending(category) {
       axios.get(`${store.apiUrl}trending/${category}/week`, {
         params: {
@@ -94,6 +87,8 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
+        this.getCastList(category);
+        this.getGenreList(category);
       })
     },
     getPopularList() {
