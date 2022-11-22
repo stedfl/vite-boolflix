@@ -137,6 +137,7 @@ export default {
   img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
   img.notavailable {
     height: 80%;
@@ -198,5 +199,23 @@ span {
   height: 300px;
   overflow: auto;
   font-style: italic;
+}
+
+@media screen and (max-width: 1600px) {
+  .card {
+    width: calc(100% / 3 - 2rem);
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .card {
+    width: calc(100% / 2 - 2rem);
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .card {
+    width: calc(100% - 2rem);
+  }
 }
 </style>

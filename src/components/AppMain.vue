@@ -66,4 +66,10 @@ main {
 h2 {
   margin: 2rem 0;
 }
+
+@media screen and (max-width: 800px) {
+  .container {
+    width: 90%;
+  }
+}
 </style>
