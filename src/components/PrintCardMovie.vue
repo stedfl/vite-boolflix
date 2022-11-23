@@ -71,16 +71,30 @@ export default {
     },
     getCastList() {
       let outputCastList = '';
+      let comma = ', ';
       if (this.castList && this.castList.length) {
         for (let i = 0; i < this.castList.length && i < this.castMaxLength ; i++) {
-          outputCastList += `<li>${this.castList[i].name}</li>`
+          if (i === (this.castList.length - 1) || (i === this.castMaxLength - 1)) {
+            comma = ''
+          }
+          outputCastList += `${this.castList[i].name}${comma}`
         }
       }
       return outputCastList;
+    },
+    getGenreList() {
+      let outputGenreList = '';
+      let comma = ', ';
+      if (this.genreList && this.genreList.length) {
+        for (let i = 0; i < this.genreList.length; i++) {
+          if (i === (this.genreList.length - 1)) {
+            comma = ''
+          } 
+          outputGenreList += `${this.genreList[i].name}${comma}`
+        }
+      }
+      return outputGenreList
     }
-
-
-    
   },
   mounted() {
     this.showFlag();
@@ -108,15 +122,13 @@ export default {
           <h3>Voto:</h3>
           <div class="stars" v-html="getStars"></div>
         </div>
-        <div class="cast">
-          <ul v-html="getCastList">
-         
-            
-          </ul>
+        <div v-if="castList && castList.length" class="cast">
+          <span>Cast: </span>
+          <span>{{getCastList}}</span>         
         </div>
-        <div class="genre">
+        <div v-if="genreList && genreList.length" class="genre">
           <span>Genere: </span>
-          <span v-for="genre in genreList" :key="genre.id">{{genre.name}}</span>
+          <span>{{getGenreList}}</span>
         </div>
         <p v-if="type.overview" class="overview info">{{type.overview}}</p>
       </div>
