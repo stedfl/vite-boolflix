@@ -37,23 +37,21 @@ export default {
           store.categories[category].dataList = [];
         });
     },
-
     filterByGenre(category) {
       store.categories[category].filteredByGenre = [];
       if(store.categories[category].dataList.length) {
         if(store.genreSearch !== '') {
+          store.genreSearch = parseInt(store.genreSearch);
           store.categories[category].filteredByGenre = store.categories[category].dataList.filter((item) => {
             return item.genre_ids.includes(store.genreSearch);
           })
-
         } else {
           store.categories[category].filteredByGenre = store.categories[category].dataList;
         }
       }
-
     },
     getCastList(category) {
-      for (let item of store.categories[category].dataList) {
+      for (let item of store.categories[category].filteredByGenre) {
         axios
           .get(`${store.apiUrl}${category}/${item.id}/credits`, {
             params: {
@@ -66,9 +64,8 @@ export default {
           });
       }
     },
-
     getGenreList(category) {
-      for (let item of store.categories[category].dataList) {
+      for (let item of store.categories[category].filteredByGenre) {
         axios
           .get(`${store.apiUrl}${category}/${item.id}`, {
             params: {
@@ -109,7 +106,6 @@ export default {
         })
         .then((results) => {
           store.categories[category].allGenres = results.data.genres;
-          console.log(store.categories[category].allGenres);
         });
     },
     getAllGenre() {

@@ -46,7 +46,7 @@ export default {
             />
           </div>
         </div>
-        <div v-if="store.categories.tv.filteredByGenre" class="tv-list">
+        <div v-if="store.categories.tv.filteredByGenre.length" class="tv-list">
           <h2>Serie TV</h2>
           <div class="wrap tv">
             <PrintCardMovie  

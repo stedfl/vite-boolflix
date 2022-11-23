@@ -24,8 +24,6 @@ export default {
         if (!isIncluded) {
           store.mergedGenres.push(genreTv);
         }
-   
-          
       })
       store.mergedGenres.forEach((item) => {
         outputOptions += `<option value="${item.id}">${item.name}</option>`;
