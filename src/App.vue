@@ -26,8 +26,9 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
+        this.getFilteredForGenre(category);
         this.getCastList(category);
-        this.getGenreList(category);
+        this.getGenreList(category);   
       })
       .catch((error) => {
         store.categories[category].dataList = [];
@@ -79,6 +80,34 @@ export default {
       }
       }
     },
+    getFilteredForGenre(category) {
+      if(store.categories[category].dataList.length) {
+        store.categories[category].idForFilteredGenre = [];
+        if(!(store.genreSearch === '')) {
+          for (let item of store.categories[category].dataList) {
+            for (let el in (store.categories[category].genreList[item.id])) {
+              if(store.categories[category].genreList[item.id][el].name === store.genreSearch) {
+                store.categories[category].idForFilteredGenre.push(item.id);
+              }
+            }
+          }
+          console.log("Lista id filtri" + category + store.categories[category].idForFilteredGenre);
+          console.log("Lista data" + category + store.categories[category].dataList);
+          if(store.categories[category].idForFilteredGenre.length) {
+            store.categories[category].filtereList = store.categories[category].dataList.filter((item) => store.categories[category].idForFilteredGenre.includes(item.id));
+          } else {
+            store.categories[category].filtereList = [];
+          }
+          console.log("lista filtrata per quegli id"+category + store.categories[category].filtereList);
+
+
+        } else {
+          store.categories[category].filtereList = store.categories[category].dataList;
+        }
+      
+      }
+      
+    },
     getApiTrending(category) {
       axios.get(`${store.apiUrl}trending/${category}/week`, {
         params: {
@@ -105,7 +134,6 @@ export default {
           store.genreOptions.push(store.categories[category].genreList[item.id][el].name);
         }
       }
-      console.log(store.genreOptions);
     }
   },
   mounted() {

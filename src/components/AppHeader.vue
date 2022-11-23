@@ -21,17 +21,17 @@ export default {
           <i class="fa-solid fa-magnifying-glass icon search"></i>
           <input @keyup.enter="$emit('search')" v-model.trim="store.movieSerieSearch" type="text" placeholder="Cerca un film o una serie TV">
         </div>
-        <select v-model='store.categorySearch' name="categories">
+        <select @change="$emit('search')" v-model='store.categorySearch' name="categories">
           <option value="">Tutti</option>
           <option 
           v-for="(category, index) in store.categories" :key="index" :value="index">
           {{category.title}}
           </option>
         </select>
-        <select name="genre">
+        <select @change="$emit('search')" v-model="store.genreSearch" name="genre">
           <option value="">Scegli Genere</option>
           <option 
-          v-for="(genre, index) in store.genreOptions" :key="index" :value="index">
+          v-for="(genre, index) in store.genreOptions" :key="index" :value="genre">
           {{genre}}
           </option>
         </select>
