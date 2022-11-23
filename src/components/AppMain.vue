@@ -58,7 +58,7 @@ export default {
             />
           </div>
         </div>
-        <h2 v-if="!store.categories.movie.filteredByGenre && !store.categories.tv.filteredByGenre">Nessun risultato trovato</h2>
+        <h2 v-if="!store.categories.movie.filteredByGenre.length && !store.categories.tv.filteredByGenre.length">Nessun risultato trovato</h2>
       </div>
     </div>
     <div v-else class="loading">
