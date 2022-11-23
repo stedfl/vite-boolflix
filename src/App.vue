@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     getApiSearch(category) {
+      store.isLoaded =  false;
       axios.get(store.apiUrl + 'search/' + category, {
         params: {
           api_key: store.key,
@@ -29,6 +30,7 @@ export default {
         this.getFilteredForGenre(category);
         this.getCastList(category);
         this.getGenreList(category);   
+        store.isLoaded =  true;
       })
       .catch((error) => {
         store.categories[category].dataList = [];
@@ -114,6 +116,7 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
+        store.isLoaded =  true;
         this.getCastList(category);
         this.getGenreList(category);
         // this.getGenreOption(category);

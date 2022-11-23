@@ -16,7 +16,7 @@ export default {
       if(store.categories.movie.dataList && store.categories.movie.dataList.length) {
         let outputImages='';
       for (let i=0; i<10; i++) {
-        outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.categories.movie.dataList[i].poster_path}" alt="">`
+        outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.categories.movie.dataList[i].poster_path}" alt="${store.categories.movie.dataList[i].title}">`
       }
       return outputImages;
       }
@@ -27,38 +27,43 @@ export default {
 
 <template>
   <main>
-    <div v-if="store.isJumbotron" class="jumbotron">
-      <h2>Film più popolari</h2>
-      <div class="jumbo-wrap" v-html="imagesJumbo">
+    <div v-if="store.isLoaded" class="main-wrapper">
+      <div v-if="store.isJumbotron" class="jumbotron">
+        <h2>Film più popolari</h2>
+        <div class="jumbo-wrap" v-html="imagesJumbo"></div>
+      </div>
+      <div class="container">
+        <div v-if="store.categories.movie.dataList.length" class="movies-list">
+          <h2>Film</h2>
+          <div class="wrap movie">
+            <PrintCardMovie 
+              v-for="movie in store.categories.movie.dataList" 
+              :key="movie.id" 
+              :type="movie"
+              :castList="store.categories.movie.castList[movie.id]"
+              :genreList="store.categories.movie.genreList[movie.id]"
+            />
+          </div>
+        </div>
+        <div v-if="store.categories.tv.dataList.length" class="tv-list">
+          <h2>Serie TV</h2>
+          <div class="wrap tv">
+            <PrintCardMovie  
+              v-for="tvSerie in store.categories.tv.dataList" 
+              :key="tvSerie.id" 
+              :type="tvSerie"
+              :castList="store.categories.tv.castList[tvSerie.id]"
+              :genreList="store.categories.tv.genreList[tvSerie.id]"
+            />
+          </div>
+        </div>
+        <h2 v-if="!store.categories.movie.dataList.length && !store.categories.tv.dataList.length">Nessun risultato trovato</h2>
       </div>
     </div>
-    <div class="container">
-      <div v-if="store.categories.movie.dataList.length" class="movies-list">
-        <h2>Movies</h2>
-        <div class="wrap movie">
-          <PrintCardMovie 
-            v-for="movie in store.categories.movie.dataList" 
-            :key="movie.id" 
-            :type="movie"
-            :castList="store.categories.movie.castList[movie.id]"
-            :genreList="store.categories.movie.genreList[movie.id]"
-          />
-        </div>
-      </div>
-      <div v-if="store.categories.tv.dataList.length" class="tv-list">
-        <h2>TV Series</h2>
-        <div class="wrap tv">
-          <PrintCardMovie  
-            v-for="tvSerie in store.categories.tv.dataList" 
-            :key="tvSerie.id" 
-            :type="tvSerie"
-            :castList="store.categories.tv.castList[tvSerie.id]"
-            :genreList="store.categories.tv.genreList[tvSerie.id]"
-          />
-        </div>
-      </div>
-      <h2 v-if="!store.categories.movie.dataList.length && !store.categories.tv.dataList.length">Nessun risultato trovato</h2>
+    <div v-else class="loading">
+      <img src="/logo-boolflix.png" alt="logo-boolflix">
     </div>
+    
   </main>
 </template>
 
@@ -75,6 +80,14 @@ main {
     black 0%,
     $primary-color 100%
   );
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .jumbotron {
   position: relative;

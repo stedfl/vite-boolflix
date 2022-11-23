@@ -24,5 +24,6 @@ export const store = reactive({
     }
   },
   categorySearch: '',
-  isJumbotron: true
+  isJumbotron: true,
+  isLoaded: false
 });
