@@ -28,6 +28,14 @@ export default {
           {{category.title}}
           </option>
         </select>
+        <select name="genre">
+          <option value="">Scegli Genere</option>
+          <option 
+          v-for="(genre, index) in store.genreOptions" :key="index" :value="index">
+          {{genre}}
+          </option>
+        </select>
+
         <button @click="$emit('search')">Cerca</button>
      </div>
     </div>

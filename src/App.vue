@@ -61,6 +61,7 @@ export default {
         })
         .then((results) => {
           store.categories[category].genreList[item.id] = results.data.genres;
+          this.getGenreOption(category);
         })
       }
     },
@@ -89,12 +90,22 @@ export default {
         store.categories[category].dataList = results.data.results;
         this.getCastList(category);
         this.getGenreList(category);
+        this.getGenreOption(category);
       })
     },
     getPopularList() {
       for (let category in store.categories) {
         this.getApiTrending(category);
       } 
+    },
+    getGenreOption(category) {
+      for (let item of store.categories[category].dataList) {
+        for (let el in (store.categories[category].genreList[item.id])) {
+         if(!store.genreOptions.includes(store.categories[category].genreList[item.id][el].name))
+          store.genreOptions.push(store.categories[category].genreList[item.id][el].name);
+        }
+      }
+      console.log(store.genreOptions);
     }
   },
   mounted() {
