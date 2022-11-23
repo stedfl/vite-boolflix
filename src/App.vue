@@ -67,6 +67,7 @@ export default {
       }
     },
     getList() {
+      store.isJumbotron = false;
       if(store.movieSerieSearch.length) {
         if(store.categorySearch === '') {
         for (let category in store.categories) {

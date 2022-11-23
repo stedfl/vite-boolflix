@@ -8,17 +8,31 @@ export default {
   },
   data() {
     return {
-      store
+      store,
+    }
+  },
+  computed: {
+    imagesJumbo() {
+      if(store.categories.movie.dataList && store.categories.movie.dataList.length) {
+        let outputImages='';
+      for (let i=0; i<10; i++) {
+        outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.categories.movie.dataList[i].poster_path}" alt="">`
+      }
+      return outputImages;
+      }
     }
   }
-
 }
 </script>
 
 <template>
   <main>
+    <div v-if="store.isJumbotron" class="jumbotron">
+      <h2>Film più popolari</h2>
+      <div class="jumbo-wrap" v-html="imagesJumbo">
+      </div>
+    </div>
     <div class="container">
-      
       <div v-if="store.categories.movie.dataList.length" class="movies-list">
         <h2>Movies</h2>
         <div class="wrap movie">
@@ -62,11 +76,37 @@ main {
     $primary-color 100%
   );
 }
+.jumbotron {
+  position: relative;
+  h2 {
+    position: absolute;
+    top: 20px;
+    color: white;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 2rem;
+    text-shadow: 5px 5px black;
+  }
+}
+
+.jumbo-wrap {
+  width: 100%;
+  height: 500px;
+}
+
+.jumbo-wrap:deep(img) {
+  width: calc(100% / 10);
+  height: 100%;
+  object-fit: cover;
+}
 .container {
   width: 70%;
   margin: 0 auto;
   height: 100%;
   color: white;
+  h2 {
+    margin: 2rem 0;
+  }
 }
 .wrap {
   display: flex;
@@ -74,10 +114,6 @@ main {
   flex-wrap: wrap;
   width: 100%;
   color: white;
-}
-
-h2 {
-  margin: 2rem 0;
 }
 
 @media screen and (max-width: 800px) {

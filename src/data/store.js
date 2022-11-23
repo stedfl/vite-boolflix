@@ -23,5 +23,6 @@ export const store = reactive({
       idForFilteredGenre: []
     }
   },
-  categorySearch: ''
+  categorySearch: '',
+  isJumbotron: true
 });
