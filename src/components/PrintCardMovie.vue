@@ -193,12 +193,14 @@ export default {
 .back-card {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   transform: rotateY(180deg);
   background-image: linear-gradient(
     black 0%,
     $primary-color 100%
   );
-  padding: 1rem;
+  padding: 1.5rem;
   border: 1px solid red;
   box-shadow: inset 0 0 40px 40px rgba(255, 1, 1, 0.1);
 }
@@ -239,8 +241,7 @@ span {
   font-weight: bold;
 }
 .overview {
-  height: 30%;
-  overflow: auto;
+  overflow: scroll;
   font-style: italic;
 }
 
