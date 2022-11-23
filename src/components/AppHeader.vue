@@ -28,13 +28,13 @@ export default {
           {{category.title}}
           </option>
         </select>
-        <select @change="$emit('search')" v-model="store.genreSearch" name="genre">
+        <!-- <select @change="$emit('search')" v-model="store.genreSearch" name="genre">
           <option value="">Scegli Genere</option>
           <option 
           v-for="(genre, index) in store.genreOptions" :key="index" :value="genre">
           {{genre}}
           </option>
-        </select>
+        </select> -->
 
         <button @click="$emit('search')">Cerca</button>
      </div>

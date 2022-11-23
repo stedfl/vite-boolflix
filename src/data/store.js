@@ -11,7 +11,7 @@ export const store = reactive({
       dataList: [],
       castList: {},
       genreList: {},
-      filtereList: [],
+      filteredList: [],
       idForFilteredGenre: []
     },
     tv: {

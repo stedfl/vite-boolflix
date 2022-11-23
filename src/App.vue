@@ -62,7 +62,7 @@ export default {
         })
         .then((results) => {
           store.categories[category].genreList[item.id] = results.data.genres;
-          this.getGenreOption(category);
+          // this.getGenreOption(category);
         })
       }
     },
@@ -94,19 +94,15 @@ export default {
           console.log("Lista id filtri" + category + store.categories[category].idForFilteredGenre);
           console.log("Lista data" + category + store.categories[category].dataList);
           if(store.categories[category].idForFilteredGenre.length) {
-            store.categories[category].filtereList = store.categories[category].dataList.filter((item) => store.categories[category].idForFilteredGenre.includes(item.id));
+            store.categories[category].filteredList = store.categories[category].dataList.filter((item) => store.categories[category].idForFilteredGenre.includes(item.id));
           } else {
-            store.categories[category].filtereList = [];
+            store.categories[category].filteredList = [];
           }
-          console.log("lista filtrata per quegli id"+category + store.categories[category].filtereList);
-
-
+          console.log("lista filtrata per quegli id"+category + store.categories[category].filteredList);
         } else {
-          store.categories[category].filtereList = store.categories[category].dataList;
+          store.categories[category].filteredList = store.categories[category].dataList;
         }
-      
       }
-      
     },
     getApiTrending(category) {
       axios.get(`${store.apiUrl}trending/${category}/week`, {
@@ -119,7 +115,7 @@ export default {
         store.categories[category].dataList = results.data.results;
         this.getCastList(category);
         this.getGenreList(category);
-        this.getGenreOption(category);
+        // this.getGenreOption(category);
       })
     },
     getPopularList() {
