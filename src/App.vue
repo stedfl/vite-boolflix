@@ -28,9 +28,9 @@ export default {
         })
         .then((results) => {
           store.categories[category].dataList = results.data.results;
-          // this.getFilteredForGenre(category);
           this.getCastList(category);
           this.getGenreList(category);
+
           store.isLoaded = true;
         })
         .catch((error) => {
@@ -66,7 +66,6 @@ export default {
           })
           .then((results) => {
             store.categories[category].genreList[item.id] = results.data.genres;
-            // this.getGenreOption(category);
           });
       }
     },
@@ -85,46 +84,21 @@ export default {
         }
       }
     },
-    getFilteredForGenre(category) {
-      if (store.categories[category].dataList.length) {
-        store.categories[category].idForFilteredGenre = [];
-        if (!(store.genreSearch === "")) {
-          for (let item of store.categories[category].dataList) {
-            for (let el in store.categories[category].genreList[item.id]) {
-              if (
-                store.categories[category].genreList[item.id][el].name ===
-                store.genreSearch
-              ) {
-                store.categories[category].idForFilteredGenre.push(item.id);
-              }
-            }
-          }
-          console.log(
-            "Lista id filtri" +
-              category +
-              store.categories[category].idForFilteredGenre
-          );
-          console.log(
-            "Lista data" + category + store.categories[category].dataList
-          );
-          if (store.categories[category].idForFilteredGenre.length) {
-            store.categories[category].filteredList = store.categories[
-              category
-            ].dataList.filter((item) =>
-              store.categories[category].idForFilteredGenre.includes(item.id)
-            );
-          } else {
-            store.categories[category].filteredList = [];
-          }
-          console.log(
-            "lista filtrata per quegli id" +
-              category +
-              store.categories[category].filteredList
-          );
-        } else {
-          store.categories[category].filteredList =
-            store.categories[category].dataList;
-        }
+    getCategoryGenre(category) {
+      axios
+        .get(`${store.apiUrl}genre/${category}/list`, {
+          params: {
+            api_key: store.key,
+            language: "it",
+          },
+        })
+        .then((results) => {
+          store.categories[category].allGenres = results.data.genres;
+        });
+    },
+    getAllGenre() {
+      for (let category in store.categories) {
+        this.getCategoryGenre(category);
       }
     },
     getApiTrending(category) {
@@ -148,20 +122,6 @@ export default {
         this.getApiTrending(category);
       }
     },
-    getGenreOption(category) {
-      for (let item of store.categories[category].dataList) {
-        for (let el in store.categories[category].genreList[item.id]) {
-          if (
-            !store.genreOptions.includes(
-              store.categories[category].genreList[item.id][el].name
-            )
-          )
-            store.genreOptions.push(
-              store.categories[category].genreList[item.id][el].name
-            );
-        }
-      }
-    },
     getJumbotronList() {
       axios
         .get(`${store.apiUrl}trending/all/day`, {
@@ -177,6 +137,7 @@ export default {
   },
   mounted() {
     this.getPopularList();
+    this.getAllGenre();
   },
 };
 </script>

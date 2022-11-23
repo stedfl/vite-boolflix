@@ -50,7 +50,6 @@ export default {
         this.isAvailable = true;
         return `https://image.tmdb.org/t/p/w342${this.type.poster_path}`
       }
-      
     },
     getStars() {
       let outputStars = '';
@@ -132,6 +131,7 @@ export default {
         </div>
         <p v-if="type.overview" class="overview info">'{{type.overview}}'</p>
       </div>
+      
     </div>
   </div>
   

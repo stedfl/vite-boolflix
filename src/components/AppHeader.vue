@@ -8,6 +8,22 @@ export default {
       store,
       title
     }
+  },
+  computed: {
+    printGenre() {
+      let outputOptions = '<option value="">Scegli Genere </option>';
+      if(store.categories.movie.allGenres && store.categories.tv.allGenres)
+      store.mergedGenres = store.categories.movie.allGenres;
+      store.categories.tv.allGenres.forEach((item) => {
+        if (!store.mergedGenres.includes(item)) {
+          store.mergedGenres.push(item);
+        }
+      })
+      store.mergedGenres.forEach((item) => {
+        outputOptions += `<option value="${item.id}}">${item.name}</option>`;
+      })
+      return outputOptions;
+    }
   }
 }
 </script>
@@ -28,13 +44,9 @@ export default {
           {{category.title}}
           </option>
         </select>
-        <!-- <select @change="$emit('search')" v-model="store.genreSearch" name="genre">
-          <option value="">Scegli Genere</option>
-          <option 
-          v-for="(genre, index) in store.genreOptions" :key="index" :value="genre">
-          {{genre}}
-          </option>
-        </select> -->
+        <select @change="$emit('search')" v-model="store.genreSearch" name="genre" v-html="printGenre">
+          
+        </select>
 
         <button @click="$emit('search')">Cerca</button>
      </div>

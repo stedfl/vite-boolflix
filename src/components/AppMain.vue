@@ -15,10 +15,10 @@ export default {
     imagesJumbo() {
       if(store.jumbotronTrending && store.jumbotronTrending.length) {
         let outputImages = '';
-      for (let i=0; i<10; i++) {
-        outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.jumbotronTrending[i].poster_path}" alt="${store.jumbotronTrending.title}">`
-      }
-      return outputImages;
+        for (let i=0; i<10; i++) {
+          outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.jumbotronTrending[i].poster_path}" alt="${store.jumbotronTrending.title}">`
+        }
+        return outputImages;
       }
     }
   }
@@ -27,6 +27,7 @@ export default {
 
 <template>
   <main>
+    
     <div v-if="store.isLoaded" class="main-wrapper">
       <div v-if="store.isJumbotron" class="jumbotron">
         <h2>Film e Serie TV più popolari</h2>
