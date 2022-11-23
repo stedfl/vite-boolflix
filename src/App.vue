@@ -27,7 +27,7 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
-        this.getFilteredForGenre(category);
+        // this.getFilteredForGenre(category);
         this.getCastList(category);
         this.getGenreList(category);   
         store.isLoaded =  true;
@@ -116,10 +116,11 @@ export default {
       })
       .then((results) => {
         store.categories[category].dataList = results.data.results;
+        this.getJumbotronList();
         store.isLoaded =  true;
         this.getCastList(category);
         this.getGenreList(category);
-        // this.getGenreOption(category);
+
       })
     },
     getPopularList() {
@@ -134,6 +135,17 @@ export default {
           store.genreOptions.push(store.categories[category].genreList[item.id][el].name);
         }
       }
+    },
+    getJumbotronList() {
+      axios.get(`${store.apiUrl}trending/all/day`, {
+        params: {
+          api_key: store.key,
+          language: 'it'
+        }
+      })
+      .then((results) => {
+        store.jumbotronTrending = results.data.results;
+      })
     }
   },
   mounted() {

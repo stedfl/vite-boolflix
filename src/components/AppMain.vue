@@ -13,10 +13,10 @@ export default {
   },
   computed: {
     imagesJumbo() {
-      if(store.categories.movie.dataList && store.categories.movie.dataList.length) {
-        let outputImages='';
+      if(store.jumbotronTrending && store.jumbotronTrending.length) {
+        let outputImages = '';
       for (let i=0; i<10; i++) {
-        outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.categories.movie.dataList[i].poster_path}" alt="${store.categories.movie.dataList[i].title}">`
+        outputImages += `<img src="https://image.tmdb.org/t/p/w342${store.jumbotronTrending[i].poster_path}" alt="${store.jumbotronTrending.title}">`
       }
       return outputImages;
       }
@@ -29,7 +29,7 @@ export default {
   <main>
     <div v-if="store.isLoaded" class="main-wrapper">
       <div v-if="store.isJumbotron" class="jumbotron">
-        <h2>Film più popolari</h2>
+        <h2>Film e Serie TV più popolari</h2>
         <div class="jumbo-wrap" v-html="imagesJumbo"></div>
       </div>
       <div class="container">
@@ -97,8 +97,8 @@ main {
     color: white;
     left: 50%;
     transform: translate(-50%);
-    font-size: 2rem;
-    text-shadow: 5px 5px black;
+    font-size: 2.2rem;
+    text-shadow: 5px 7px black;
   }
 }
 
@@ -119,6 +119,7 @@ main {
   color: white;
   h2 {
     margin: 2rem 0;
+    text-shadow: 3px 3px red;
   }
 }
 .wrap {
