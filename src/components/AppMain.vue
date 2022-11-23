@@ -27,18 +27,18 @@ export default {
 
 <template>
   <main>
-    
+
     <div v-if="store.isLoaded" class="main-wrapper">
       <div v-if="store.isJumbotron" class="jumbotron">
         <h2>Film e Serie TV più popolari</h2>
         <div class="jumbo-wrap" v-html="imagesJumbo"></div>
       </div>
       <div class="container">
-        <div v-if="store.categories.movie.dataList.length" class="movies-list">
+        <div v-if="store.categories.movie.filteredByGenre.length" class="movies-list">
           <h2>Film</h2>
           <div class="wrap movie">
             <PrintCardMovie 
-              v-for="movie in store.categories.movie.dataList" 
+              v-for="movie in store.categories.movie.filteredByGenre" 
               :key="movie.id" 
               :type="movie"
               :castList="store.categories.movie.castList[movie.id]"
@@ -46,11 +46,11 @@ export default {
             />
           </div>
         </div>
-        <div v-if="store.categories.tv.dataList.length" class="tv-list">
+        <div v-if="store.categories.tv.filteredByGenre" class="tv-list">
           <h2>Serie TV</h2>
           <div class="wrap tv">
             <PrintCardMovie  
-              v-for="tvSerie in store.categories.tv.dataList" 
+              v-for="tvSerie in store.categories.tv.filteredByGenre" 
               :key="tvSerie.id" 
               :type="tvSerie"
               :castList="store.categories.tv.castList[tvSerie.id]"
@@ -58,7 +58,7 @@ export default {
             />
           </div>
         </div>
-        <h2 v-if="!store.categories.movie.dataList.length && !store.categories.tv.dataList.length">Nessun risultato trovato</h2>
+        <h2 v-if="!store.categories.movie.filteredByGenre && !store.categories.tv.filteredByGenre">Nessun risultato trovato</h2>
       </div>
     </div>
     <div v-else class="loading">

@@ -10,7 +10,7 @@ export const store = reactive({
       dataList: [],
       castList: {},
       genreList: {},
-      filteredList: [],
+      filteredByGenre: [],
       allGenres: []
     },
     tv: {
@@ -18,7 +18,7 @@ export const store = reactive({
       dataList: [],
       castList: {},
       genreList: {},
-      filtereList: [],
+      filteredByGenre: [],
       allGenres: []
     }
   },

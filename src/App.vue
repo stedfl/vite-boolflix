@@ -28,9 +28,9 @@ export default {
         })
         .then((results) => {
           store.categories[category].dataList = results.data.results;
+          this.filterByGenre(category)
           this.getCastList(category);
           this.getGenreList(category);
-
           store.isLoaded = true;
         })
         .catch((error) => {
@@ -38,8 +38,21 @@ export default {
         });
     },
 
+    filterByGenre(category) {
+      store.categories[category].filteredByGenre = [];
+      if(store.categories[category].dataList.length) {
+        if(store.genreSearch !== '') {
+          store.categories[category].filteredByGenre = store.categories[category].dataList.filter((item) => {
+            return item.genre_ids.includes(store.genreSearch);
+          })
+
+        } else {
+          store.categories[category].filteredByGenre = store.categories[category].dataList;
+        }
+      }
+
+    },
     getCastList(category) {
-      store.categories[category].castList = {};
       for (let item of store.categories[category].dataList) {
         axios
           .get(`${store.apiUrl}${category}/${item.id}/credits`, {
@@ -55,7 +68,6 @@ export default {
     },
 
     getGenreList(category) {
-      store.categories[category].genreList = {};
       for (let item of store.categories[category].dataList) {
         axios
           .get(`${store.apiUrl}${category}/${item.id}`, {
@@ -79,6 +91,9 @@ export default {
         } else {
           for (let category in store.categories) {
             store.categories[category].dataList = [];
+            store.categories[category].filteredByGenre = [];
+            store.categories[category].genreList = {};
+            store.categories[category].castList = {};
           }
           this.getApiSearch(store.categorySearch);
         }
@@ -94,11 +109,13 @@ export default {
         })
         .then((results) => {
           store.categories[category].allGenres = results.data.genres;
+          console.log(store.categories[category].allGenres);
         });
     },
     getAllGenre() {
       for (let category in store.categories) {
         this.getCategoryGenre(category);
+        
       }
     },
     getApiTrending(category) {
@@ -111,6 +128,7 @@ export default {
         })
         .then((results) => {
           store.categories[category].dataList = results.data.results;
+          store.categories[category].filteredByGenre = store.categories[category].dataList;
           this.getJumbotronList();
           store.isLoaded = true;
           this.getCastList(category);
