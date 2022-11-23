@@ -19,7 +19,7 @@ export default {
       <div class="search">
         <div class="search-bar">
           <i class="fa-solid fa-magnifying-glass icon search"></i>
-          <input v-model.trim="store.movieSerieSearch" type="text" placeholder="Cerca un film o una serie TV">
+          <input @keyup.enter="$emit('search')" v-model.trim="store.movieSerieSearch" type="text" placeholder="Cerca un film o una serie TV">
         </div>
         <select v-model='store.categorySearch' name="categories">
           <option value="">Tutti</option>

@@ -122,15 +122,15 @@ export default {
           <h3>Voto:</h3>
           <div class="stars" v-html="getStars"></div>
         </div>
-        <div v-if="castList && castList.length" class="cast">
-          <span>Cast: </span>
+        <div v-if="castList && castList.length" class="cast info">
+          <span class="info-title">Cast: </span>
           <span>{{getCastList}}</span>         
         </div>
-        <div v-if="genreList && genreList.length" class="genre">
-          <span>Genere: </span>
+        <div v-if="genreList && genreList.length" class="genre info">
+          <span class="info-title">Genere: </span>
           <span>{{getGenreList}}</span>
         </div>
-        <p v-if="type.overview" class="overview info">{{type.overview}}</p>
+        <p v-if="type.overview" class="overview info">'{{type.overview}}'</p>
       </div>
     </div>
   </div>
@@ -211,7 +211,7 @@ export default {
   margin-bottom: 0.5rem;
 }
 
-h2, h3, p {
+h2, h3, p, span {
   font-size: 1rem;
 }
 
@@ -235,8 +235,11 @@ span {
   color: lighten($primary-color, 40%);
 }
 
+.info-title {
+  font-weight: bold;
+}
 .overview {
-  height: 300px;
+  height: 30%;
   overflow: auto;
   font-style: italic;
 }
