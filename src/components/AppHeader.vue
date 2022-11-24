@@ -117,4 +117,18 @@ button {
     box-shadow: 2px 2px 5px rgb(135, 5, 5);
   }
 }
+
+@media screen and (max-width: 800px) {
+.container {
+  display: block;
+  text-align: center;
+  padding: 1rem;
+  h1 {
+    margin-bottom: 1rem;
+  }
+  .search {
+    justify-content: center;
+  }
+}
+}
 </style>
